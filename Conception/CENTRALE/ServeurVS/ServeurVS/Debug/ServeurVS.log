@@ -1,0 +1,3 @@
+﻿  main.cpp
+c:\crousradiateur\conception\centrale\serveurvs\serveurvs\main.cpp(16): warning C4101: 'trame' : variable locale non référencée
+  ServeurVS.vcxproj -> C:\CrousRadiateur\Conception\CENTRALE\ServeurVS\Debug\ServeurVS.exe

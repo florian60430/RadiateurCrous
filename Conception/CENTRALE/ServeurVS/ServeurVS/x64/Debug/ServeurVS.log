@@ -1,0 +1,7 @@
+﻿  main.cpp
+x:\smtp\serveurvs\serveurvs\main.cpp(20): error C3867: 'serveur::liaison' : syntaxe non-standard ; utilisez '&' pour créer un pointeur vers un membre
+x:\smtp\serveurvs\serveurvs\main.cpp(31): error C3867: 'serveur::listenClient' : syntaxe non-standard ; utilisez '&' pour créer un pointeur vers un membre
+  serveur.cpp
+x:\smtp\serveurvs\serveurvs\serveur.cpp(62): warning C4806: '==' : opération risquée : aucune valeur de type 'bool' promue en type 'int' ne peut être égale à la constante donnée
+  Génération de code en cours...
+x:\smtp\serveurvs\serveurvs\serveur.cpp(54): warning C4715: 'serveur::listenClient' : les chemins de contrôle ne retournent pas tous une valeur

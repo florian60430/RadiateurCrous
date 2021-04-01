@@ -1,0 +1,3 @@
+https://gist.github.com/gyassine/a5eda1c64557baa60cd563f22ac96c0d
+https://blog.guiguiabloc.fr/index.php/2014/11/13/mqtt-faites-communiquer-vos-objets-simplement/
+https://www.youtube.com/watch?v=ERPhUsmbhMo
