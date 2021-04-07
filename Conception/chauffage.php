@@ -8,8 +8,8 @@ catch(Exception $e)
         die('Erreur : '.$e->getMessage());
 }
 
-$reponse1=$bdd->prepare('SELECT * FROM chauffages where ID_Appartement = :id ORDER BY id DESC');
-$reponse1->execute(array(
+$reponse=$bdd->prepare('SELECT * FROM chauffages where ID_Appartement = :id ORDER BY id DESC');
+$reponse->execute(array(
     'id'=> $_POST["id"]
 ));
 ?>
@@ -22,11 +22,11 @@ $reponse1->execute(array(
     <body>
         <?php 
             
-            while ($donnees2 = $reponse1->fetch())
+            while ($donnees2 = $reponse->fetch())
             {
-                echo "<B>".htmlspecialchars ($donnees2['ID'])."</B>"."<br>"; 
+                echo "<B>".htmlspecialchars ($donnees2['ID_Appartement'])."</B>"."<br>"; 
                 echo htmlspecialchars ($donnees2['Etat_Chauffage'])."<br>";   
-                 
+                
             }   
         ?>
 

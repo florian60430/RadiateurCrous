@@ -23,7 +23,7 @@ $reponse=$bdd->query('SELECT * FROM batiment ORDER BY id DESC ');
                 echo "<B>".htmlspecialchars ($donnees['nom_batiment'])."</B>"."<br>"; 
                 echo htmlspecialchars ($donnees['adresse'])."<br>"; 
                 ?><form action="appartement.php" method="post">
-                <input type="hidden" name="id" value="<?php echo $donnees['id'];?>"> 
+                <input type="hidden" name="id" value="<?php echo $donnees['ID'];?>"> 
                 <input type="submit" value="selectioner"><br> </form> <?php
             }   
     
