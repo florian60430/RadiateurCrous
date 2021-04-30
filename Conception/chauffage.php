@@ -8,9 +8,9 @@ catch(Exception $e)
         die('Erreur : '.$e->getMessage());
 }
 
-$reponse=$bdd->prepare('SELECT * FROM chauffages where ID_Appartement = :id ORDER BY id DESC');
+$reponse=$bdd->prepare('SELECT * FROM chauffages where ID_Appartement = :ID ORDER BY id DESC');
 $reponse->execute(array(
-    'id'=> $_POST["id"]
+    'ID'=> $_POST["ID"]
 ));
 ?>
 

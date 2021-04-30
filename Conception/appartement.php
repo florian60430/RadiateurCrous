@@ -27,7 +27,7 @@ $reponse->execute(array(
                 echo "<B>".htmlspecialchars ($donnees1['Num_appartement'])."</B>"."<br>"; 
                 echo htmlspecialchars ($donnees1['locataire'])."<br>";   
                 ?><form action="chauffage.php" method="post">
-                <input type="hidden" name="id" value="<?php echo $donnees2['id'];?>"> 
+                <input type="hidden" name="ID" value="<?php echo $donnees1['ID'];?>"> 
                 <input type="submit" value="selectioner"><br> </form> <?php   
             }   
         ?>

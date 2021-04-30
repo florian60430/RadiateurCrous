@@ -18,14 +18,27 @@ if(isset($_POST['username']) && isset($_POST['password']))
     if($username !== "" && $password !== "")
     {
         $requete = "SELECT count(*) FROM util where 
-              user = '".$username."' and MDP = '".$password."' ";
+              user = '".$username."' and MDP = '".$password."' and droit = 1 ";
         $exec_requete = mysqli_query($db,$requete);
         $reponse      = mysqli_fetch_array($exec_requete);
         $count = $reponse['count(*)'];
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
            $_SESSION['username'] = $username;
-           header('Location: batiment.php');
+           header('Location: utiset.php');
+        }
+        else if ($username !== "" && $password !== "")
+        {
+            $requete = "SELECT count(*) FROM util where 
+                  user = '".$username."' and MDP = '".$password."' and droit = 0 ";
+            $exec_requete = mysqli_query($db,$requete);
+            $reponse      = mysqli_fetch_array($exec_requete);
+            $count = $reponse['count(*)'];
+            if($count!=0) // nom d'utilisateur et mot de passe correctes
+            {
+               $_SESSION['username'] = $username;
+               header('Location: batiment.php');
+            }
         }
         else
         {
