@@ -15,7 +15,7 @@ int main() {
 	mosquitto.callbackMessage();
 	rc = mosquitto.connexion("192.168.1.96", 1883, 10);
 	if(rc) {
-		printf("Could not connect to Broker with return code %d\n", rc);
+		printf("Impossible de se connecter au broker %d\n", rc);
 		return -1;
 	}
 
