@@ -1,8 +1,5 @@
 <html>
-
-
     <head> </head>
-
     <body>
             <form action="creeutilisateur.php" method="post">
             <input type="hidden" name="fg"> 
@@ -15,7 +12,5 @@
             <form action="supputilisateur.php" method="post">
             <input type="hidden" name="fg"> 
             <input type="submit" value="supprimer utilisateur"><br> </form> 
-
     </body>
-
 </html>

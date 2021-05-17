@@ -1,6 +1,5 @@
 <html>
     <head></head>
-
     <body>
         <form action="util_post.php" method="post">
             <div>
@@ -22,8 +21,6 @@
             <div>
                 <input type="submit" value="envoyer">
             </div>
-        </form>
-            
+        </form>       
     </body>
-
 </html>
