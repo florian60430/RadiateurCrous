@@ -32,7 +32,7 @@ int xbee::ReceptionXbee()
 	return 0;
 }
 
-int xbee::send()
+int xbee::sendData()
 {
 	printf("Data du radiateur envoyer avec sucées !\n");
 	return 0;
