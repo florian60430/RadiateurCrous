@@ -5,6 +5,7 @@ $reponse=$bdd->prepare('SELECT * FROM chauffage where ID_appartement = :ID ORDER
 $reponse->execute(array(
     'ID'=> $_POST["ID"]
 ));
+
 ?>
 <html>
     <head> </head>
@@ -12,10 +13,16 @@ $reponse->execute(array(
         <?php          
             while ($donnees2 = $reponse->fetch())
             {
-                echo "<B>".htmlspecialchars ($donnees2['ID_appartement'])."</B>"."<br>"; 
+                echo "température du chauffage en °C : ";
+                echo htmlspecialchars ($donnees2['temperature'])."<br>"; 
+                echo "état du chauffage : ";
                 echo htmlspecialchars ($donnees2['etat'])."<br>";   
-                
-            }   
+                ?><form action="consigne.php" method="post">
+                <input type="hidden" name="ID" value="<?php echo $donnees2['ID'];?>"> 
+                <input type="submit" value="selectioner"><br> </form> <?php     
+            } 
+          
         ?>
+        <a href="index.php">retour</a><br>
     </body>
 </html>

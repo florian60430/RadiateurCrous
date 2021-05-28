@@ -12,18 +12,13 @@
 
 <body>
     <form action="" method="post">
-
         <input type="text" name="user" placeholder="identifiant">
         <input type="text" name="mdp" placeholder="mot de passe">
         <input type="email" name='mail' placeholder="email">   
-
-        <input type="radio" id="admin" name="droit" value="0">
+        <input type="radio" id="admin" name="droit" value="utilisateur">
         <label for="1">user</label>
-        
-        <input type="radio" id="utilisateur" name="droit" value="1">
+        <input type="radio" id="utilisateur" name="droit" value="admin">
         <label for="2">admin</label>
-
-        
         <input type="submit" name="droitForm" value="valider">
     </form>
 <?php
@@ -35,6 +30,7 @@ if(isset($_POST['droitForm']))
 } 
 
 ?>
+<a href="param.php">retour</a>  
 </body>
 
 </html>

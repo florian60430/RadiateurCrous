@@ -13,12 +13,15 @@ $reponse->execute(array(
         <?php 
             while ($donnees1 = $reponse->fetch())
             {
-                echo "<B>".htmlspecialchars ($donnees1['num_appartement'])."</B>"."<br>"; 
+                echo "numéro de l'appartement : ";
+                echo htmlspecialchars ($donnees1['num_appartement'])."<br>";
+                echo "nom du locataire : "; 
                 echo htmlspecialchars ($donnees1['locataire'])."<br>";   
                 ?><form action="chauffage.php" method="post">
                 <input type="hidden" name="ID" value="<?php echo $donnees1['ID'];?>"> 
                 <input type="submit" value="selectioner"><br> </form> <?php   
             }   
         ?>
+        <a href="index.php">retour</a><br>
     </body>
 </html>
