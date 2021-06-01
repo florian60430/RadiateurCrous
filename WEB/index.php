@@ -20,6 +20,7 @@ if (isset($_SESSION['connect'])) {
     if ($_SESSION['connect']) {
 
         include 'site.php';
+        ?> <a href="index.php">Accueil</a> <?php 
     } else {
         include 'login.php';
     }

@@ -56,11 +56,51 @@ $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_S
                 $consignes .= "Numério de la consigne : ";
                 $consignes .= ($data['ID']) . "<br>";
                 $consignes .= "Jour de la semaine du début de la consigne : ";
-                $consignes .= ($data['jour_semaine_debut']) . "<br>";
+                if ( $data['jour_semaine_debut']== '1'){
+                    $consignes .= "LUNDI" . "<br>";    
+                    }
+                    elseif ( $data['jour_semaine_debut']== '2'){
+                        $consignes .= "MARDI" . "<br>";    
+                        }
+                        elseif ( $data['jour_semaine_debut']== '3'){
+                            $consignes .= "MERCREDI" . "<br>";    
+                            }
+                            elseif ( $data['jour_semaine_debut']== '4'){
+                                $consignes .= "JEUDI" . "<br>";    
+                                }
+                                elseif ( $data['jour_semaine_debut']== '5'){
+                                    $consignes .= "VENDREDI" . "<br>";    
+                                    }
+                                    elseif ( $data['jour_semaine_debut']== '6'){
+                                        $consignes .= "SAMEDI" . "<br>";    
+                                        }
+                                        elseif ( $data['jour_semaine_debut']== '7'){
+                                            $consignes .= "DIMANCHE" . "<br>";    
+                                            }
                 $consignes .= "Heure du début de la consigne : ";
                 $consignes .= ($data['heure_debut']) . "<br>";
                 $consignes .= "Jour de la semaine de la fin de la consigne : ";
-                $consignes .= ($data['jour_semaine_fin']) . "<br>";
+                if ( $data['jour_semaine_fin']== '1'){
+                    $consignes .= "LUNDI" . "<br>";    
+                }
+                    elseif ( $data['jour_semaine_fin']== '2'){
+                        $consignes .= "MARDI" . "<br>";    
+                    }
+                        elseif ( $data['jour_semaine_fin']== '3'){
+                            $consignes .= "MERCREDI" . "<br>";    
+                        }
+                            elseif ( $data['jour_semaine_fin']== '4'){
+                                $consignes .= "JEUDI" . "<br>";    
+                            }
+                                elseif ( $data['jour_semaine_fin']== '5'){
+                                    $consignes .= "VENDREDI" . "<br>";    
+                                }
+                                    elseif ( $data['jour_semaine_fin']== '6'){
+                                        $consignes .= "SAMEDI" . "<br>";    
+                                    }
+                                            elseif ( $data['jour_semaine_fin']== '7'){
+                                                $consignes .= "DIMANCHE" . "<br>";    
+                                            }
                 $consignes .= "Heure de fin de la consigne : ";
                 $consignes .= ($data['heure_fin']) . "<br>";
                 $consignes .= "Température voulu en °C : ";
@@ -71,13 +111,13 @@ $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_S
 
                 <label>Jour de la semaine du début.</label>
                 <select name="jour_semaine_debut">
-                    <option value="LUNDI"selected="selected">LUNDI</option>
-                    <option value="MARDI">MARDI</option>
-                    <option value="MERCREDI">MERCREDI</option>
-                    <option value="JEUDI">JEUDI</option>
-                    <option value="VENDREDI">VENDREDI</option>
-                    <option value="SAMEDI">SAMEDI</option>
-                    <option value="DIMANCHE">DIMANCHE</option>
+                    <option value="1"selected="selected">LUNDI</option>
+                    <option value="2">MARDI</option>
+                    <option value="3">MERCREDI</option>
+                    <option value="4">JEUDI</option>
+                    <option value="5">VENDREDI</option>
+                    <option value="6">SAMEDI</option>
+                    <option value="7">DIMANCHE</option>
                     ....
                 </select>
                 <label>Heure du début.</label>
@@ -86,13 +126,13 @@ $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_S
 
                 <label>Jour de la semaine de fin.</label>
                 <select name="jour_semaine_fin">
-                    <option value="LUNDI"selected="selected">LUNDI</option>
-                    <option value="MARDI">MARDI</option>
-                    <option value="MERCREDI">MERCREDI</option>
-                    <option value="JEUDI">JEUDI</option>
-                    <option value="VENDREDI">VENDREDI</option>
-                    <option value="SAMEDI">SAMEDI</option>
-                    <option value="DIMANCHE">DIMANCHE</option>
+                    <option value="1"selected="selected">LUNDI</option>
+                    <option value="2">MARDI</option>
+                    <option value="3">MERCREDI</option>
+                    <option value="4">JEUDI</option>
+                    <option value="5">VENDREDI</option>
+                    <option value="6">SAMEDI</option>
+                    <option value="7">DIMANCHE</option>
                     ....
                 </select>
                 <label>Heure de fin.</label>
@@ -104,6 +144,7 @@ $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_S
                 <a href="consigne.php">retour</a><br>    
                 <?php
                 echo $consignes;
+                
         ?>      
             
     </body>

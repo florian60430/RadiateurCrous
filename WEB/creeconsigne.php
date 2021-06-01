@@ -22,26 +22,26 @@ include "config.php";
         <label><b>Attention la température et en °C.</b></label><br>
         <label>Jour de la semaine du début.</label>
         <select name="jour_semaine_debut">
-            <option value="LUNDI" selected="selected">LUNDI</option>
-            <option value="MARDI">MARDI</option>
-            <option value="MERCREDI">MERCREDI</option>
-            <option value="JEUDI">JEUDI</option>
-            <option value="VENDREDI">VENDREDI</option>
-            <option value="SAMEDI">SAMEDI</option>
-            <option value="DIMANCHE">DIMANCHE</option>
+            <option value="1" selected="selected">LUNDI</option>
+            <option value="2">MARDI</option>
+            <option value="3">MERCREDI</option>
+            <option value="4">JEUDI</option>
+            <option value="5">VENDREDI</option>
+            <option value="6">SAMEDI</option>
+            <option value="7">DIMANCHE</option>
             ....
         </select>
         <label>Heure du début.</label>
         <input type="time" name="heure_debut" placeholder="heure de début"><br>
         <label>Jour de la semaine de fin.</label>
         <select name="jour_semaine_fin">
-            <option value="LUNDI" selected="selected">LUNDI</option>
-            <option value="MARDI">MARDI</option>
-            <option value="MERCREDI">MERCREDI</option>
-            <option value="JEUDI">JEUDI</option>
-            <option value="VENDREDI">VENDREDI</option>
-            <option value="SAMEDI">SAMEDI</option>
-            <option value="DIMANCHE">DIMANCHE</option>
+            <option value="1" selected="selected">LUNDI</option>
+            <option value="2">MARDI</option>
+            <option value="3">MERCREDI</option>
+            <option value="4">JEUDI</option>
+            <option value="5">VENDREDI</option>
+            <option value="6">SAMEDI</option>
+            <option value="7">DIMANCHE</option>
             ....
         </select>
         <label>Heure de fin.</label>
