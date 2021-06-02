@@ -32,7 +32,31 @@ void mariadb::updateTemperature(char *payload)
 
    /*verif topic*/
    char request[100];
-   snprintf(request, 100, "UPDATE `chauffage` SET `temperature`= %s WHERE ID = 1", payload);
+   char buffer[100];
+   char idDuRadiateur[50];
+   char tempRad[50];
+   int i = 0;
+
+   strcpy(buffer, payload);
+
+   while (buffer[i] != '%')
+   {
+      idDuRadiateur[i] = buffer[i];
+      i++;
+   }
+i++;
+int j = 0;
+  while (buffer[i] != '+')
+   {
+      tempRad[j] = buffer[i];
+      i++;
+      j++;
+   }
+   cout << "id : " << idDuRadiateur << endl;
+   cout << "temperature : " << tempRad << endl;
+
+
+   snprintf(request, 100, "UPDATE `chauffage` SET `temperature`= %s WHERE ID = %s", tempRad, idDuRadiateur);
    printf("\n%s\n", request);
    if (mysql_query(conn, request))
    {
@@ -46,7 +70,7 @@ void mariadb::updateTemperature(char *payload)
    mysql_free_result(res);
 }
 
-void mariadb::determinePeriode(struct mosquitto * mosq)
+void mariadb::determinePeriode(struct mosquitto *mosq)
 {
    int tabJourDebut[500];
    MYSQL_ROW row;
@@ -56,7 +80,7 @@ void mariadb::determinePeriode(struct mosquitto * mosq)
    int i = 0;
    int sizeMax = 0;
    char buffer[256];
-
+   char request[500];
 
    while (1)
    {
@@ -68,12 +92,14 @@ void mariadb::determinePeriode(struct mosquitto * mosq)
       heureAcutel = ltm->tm_hour;
       minuteAcutel = ltm->tm_min;
 
-      mysql_query(conn, "SELECT * FROM `consigne_prog` WHERE 2 >= `jour_semaine_debut` AND 2 <= `jour_semaine_fin` AND 12 >= `heure_debut` AND 12 < `heure_fin`");
+      snprintf(request, 300, "SELECT * FROM `consigne_prog` WHERE %d >= `jour_semaine_debut` AND %d <= `jour_semaine_fin` AND %d >= `heure_debut` AND %d < `heure_fin`", jourAcutel, jourAcutel, heureAcutel, heureAcutel);
+      mysql_query(conn, request);
+
       res = mysql_store_result(conn);
 
       while (row = mysql_fetch_row(res))
       {
-         cout << "les radiateur n° " << row[1] << " doivent chauffer à " << row[6] << "°C" << endl;
+         cout << "le radiateur n° " << row[1] << " doit chauffer à " << row[6] << "°C" << endl;
 
          strcpy(buffer, row[1]);
          strcat(buffer, "$");
@@ -82,7 +108,7 @@ void mariadb::determinePeriode(struct mosquitto * mosq)
 
          mosquitto_publish(mosq, NULL, "consigne/radiateur", strlen(buffer), buffer, 0, false);
       }
-      sleep(10);
+      sleep(30);
    }
 }
 

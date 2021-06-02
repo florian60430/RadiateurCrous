@@ -1,0 +1,4 @@
+etude physique : http://sti-monge.fr/maintenancesystemes/wp-content/uploads/2013/03/reseau-et-cablage.pdf
+cable : https://www.ldlc.com/fiche/PB00198991.html
+serveur : https://www.ldlc.com/fiche/PB00240115.html
+comment choisir son serveur :https://www.nowteam.net/comment-bien-choisir-son-serveur-informatique/#:~:text=Le%20serveur%20tour%20est%20le,vos%20donn%C3%A9es%20%C3%A0%20moindre%20co%C3%BBt.

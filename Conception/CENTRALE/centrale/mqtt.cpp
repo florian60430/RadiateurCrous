@@ -64,7 +64,7 @@ void mqtt::on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_
     if (strcmp(msg->topic, "temperature") == 0)
     {
         printf("Nouveau message sur le topic \"%s\" : %s\n", msg->topic, (char *)msg->payload);
-        //mariadb::get()->updateTemperature((char*)msg->payload);
+        mariadb::get()->updateTemperature((char*)msg->payload);
     }
 }
 
