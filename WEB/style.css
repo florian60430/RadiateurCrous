@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body
 {
     background-color: whitesmoke; /* Le fond de la page sera noir */
@@ -12,3 +13,19 @@ p
    padding: 12px;
    margin: 10px 150px; /* Marge extérieure de 50px */
 }
+=======
+body
+{
+    background-color: whitesmoke; /* Le fond de la page sera noir */
+    color: black; /* Le texte de la page sera blanc */
+    
+}
+p
+{
+   width: 450px;
+   border: 1px solid black;
+   text-align: justify;
+   padding: 12px;
+   margin: 10px 150px; /* Marge extérieure de 50px */
+}
+>>>>>>> fa5f3c8d75d41b08d061f6e5458271dc4659f634
