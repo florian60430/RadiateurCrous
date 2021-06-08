@@ -7,9 +7,13 @@ include "fonction.php";
 if (isset($_POST['mdp'], $_POST['identifiant'])) {
 
     $result = verification($bdd, $_POST['identifiant'], $_POST['mdp']);
-    if ($result == true) {
+    if ($result == 1) {
         $_SESSION['connect'] = 1;
-    } else 
+    } else if ($result == 2)
+    {
+        $_SESSION['connect'] = 2;
+    }
+    else 
     {
         echo "<p style='color:red'>utilisateur ou mot de passe incorrect</p>";
     }

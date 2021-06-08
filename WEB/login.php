@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <!-- importer le fichier de style -->
-    <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" media="screen" type="text/css" /><!-- Appel le style.CSS -->
 </head>
 
 <body>

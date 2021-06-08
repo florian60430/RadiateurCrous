@@ -1,0 +1,4 @@
+rad 2 : id batiment : 1
+rad 3 id batiment : 
+rad 4 id batiment : 
+rad 8   id batiment : 
