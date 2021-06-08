@@ -1,34 +1,34 @@
 <?php
-
 session_start();
 
 include "header.php";
+include "fonction.php";
 
+if (isset($_POST['mdp'], $_POST['identifiant'])) {
 
-if (isset($_SESSION['userIsConnect'])) {
+    $result = verification($bdd, $_POST['identifiant'], $_POST['mdp']);
+    if ($result == true) {
+        $_SESSION['connect'] = 1;
+    } else 
+    {
+        echo "<p style='color:red'>utilisateur ou mot de passe incorrect</p>";
+    }
+}
 
-    if ($_SESSION['userIsConnect']) {
-        $reponse = $bdd->query('SELECT * FROM batiment ORDER BY ID DESC');
+if (isset($_SESSION['connect'])) {
 
-        while ($donnees = $reponse->fetch()) {
-            echo "<B>" . htmlspecialchars($donnees['nom_batiment']) . "</B>" . "<br>";
-            echo htmlspecialchars($donnees['adresse']) . "<br>";
-?><form action="appartement.php" method="post">
-                <input type="hidden" name="ID" value="<?php echo $donnees['ID']; ?>">
-                <input type="submit" value="selectioner"><br>
-            </form>
-        <?php
-        } ?>
-        <form method="post" action="deconnexion.php">
-            <input type="submit" value="Déconnexion">
-        </form>
-<?php } else {
-        include "login.php";
+    if ($_SESSION['connect']) {
+
+        include 'site.php';
+        ?> <a href="index.php">Accueil</a> <?php 
+    } else {
+        include 'login.php';
     }
 } else {
-
-    include "login.php";
+    include 'login.php';
 }
+
+
 
 ?>
 
