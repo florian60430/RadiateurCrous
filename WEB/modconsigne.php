@@ -13,7 +13,8 @@ if (isset($_POST["ID_chauffages"])) { /*condition qui vérifie l'ID envoyer par 
 
 if(isset($_POST['droitForm']))/* requet MYSQL pour modifier la consigne avec les nouvelle donnée quand les ID corrésponde*/
 {
-    $result =  $bdd->query("UPDATE consigne_prog SET jour_semaine_debut='".$_POST['jour_semaine_debut']."',jour_semaine_fin='".$_POST['jour_semaine_fin']."',heure_fin='".$_POST['heure_fin']."',heure_debut='".$_POST['heure_debut']."',température='".$_POST['température']."' where ID ='".$_POST['ID']."' ");
+    if ($_POST['jour_semaine_fin'] >= $_POST['jour_semaine_debut']){
+    $result =  $bdd->query("UPDATE consigne_prog SET debut='".$_POST['jour_semaine_debut'].$_POST['heure_debut'].$_POST['minute_debut']."',fin='".$_POST['jour_semaine_fin'].$_POST['heure_fin'].$_POST['minute_fin']."',température='".$_POST['température']."' where ID ='".$_POST['ID']."' ");
         $mqtt = new bluerhinos\phpMQTT($host, $port, "ClientID" . rand());
 
         if ($mqtt->connect(true, NULL)) {
@@ -24,8 +25,13 @@ if(isset($_POST['droitForm']))/* requet MYSQL pour modifier la consigne avec les
 
         else {
             echo "Fail or time out";
-        }              
+        }   
+    }
+    else {
+       echo "Le jour de fin de consigne ne peut étre avant le jour de début de consigne !";
+       }           
 }  
+
 include "header.php";
 $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_SESSION['idChauffage'] . '');
 /*requet MYSQL qui selection tout les données de la table consigne quand les ID corrésponde */
@@ -58,54 +64,54 @@ $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_S
                 $consignes .= "<B>" ."Consigne". "</B>". "<br>"; 
                 $consignes .= "Numério de la consigne : ";
                 $consignes .= ($data['ID']) . "<br>";
-                $consignes .= "Jour de la semaine du début de la consigne : ";
-                if ( $data['jour_semaine_debut']== '1'){
-                    $consignes .= "LUNDI" . "<br>";    
+                $consignes .= "début de la consigne : ";
+                if ( $data['debut'][0]== '1'){
+                    $consignes .= "LUNDI ";    
                     }
-                    elseif ( $data['jour_semaine_debut']== '2'){
-                        $consignes .= "MARDI" . "<br>";    
+                    elseif ( $data['debut'][0]== '2'){
+                        $consignes .= "MARDI ";    
                         }
-                        elseif ( $data['jour_semaine_debut']== '3'){
-                            $consignes .= "MERCREDI" . "<br>";    
+                        elseif ( $data['debut'][0]== '3'){
+                            $consignes .= "MERCREDI ";    
                             }
-                            elseif ( $data['jour_semaine_debut']== '4'){
-                                $consignes .= "JEUDI" . "<br>";    
+                            elseif ( $data['debut'][0]== '4'){
+                                $consignes .= "JEUDI ";    
                                 }
-                                elseif ( $data['jour_semaine_debut']== '5'){
-                                    $consignes .= "VENDREDI" . "<br>";    
+                                elseif ( $data['debut'][0]== '5'){
+                                    $consignes .= "VENDREDI ";    
                                     }
-                                    elseif ( $data['jour_semaine_debut']== '6'){
-                                        $consignes .= "SAMEDI" . "<br>";    
+                                    elseif ( $data['debut'][0]== '6'){
+                                        $consignes .= "SAMEDI ";    
                                         }
-                                        elseif ( $data['jour_semaine_debut']== '7'){
-                                            $consignes .= "DIMANCHE" . "<br>";    
+                                        elseif ( $data['debut'][0]== '7'){
+                                            $consignes .= "DIMANCHE ";    
                                             }
-                $consignes .= "Heure du début de la consigne : ";
-                $consignes .= ($data['heure_debut']) . "<br>";
-                $consignes .= "Jour de la semaine de la fin de la consigne : ";
-                if ( $data['jour_semaine_fin']== '1'){
-                    $consignes .= "LUNDI" . "<br>";    
-                }
-                    elseif ( $data['jour_semaine_fin']== '2'){
-                        $consignes .= "MARDI" . "<br>";    
+                                            $consignes .= $data['debut'][1] . $data['debut'][2]. " h ";
+                                            $consignes .= $data['debut'][3] . $data['debut'][4]. " min ". "<br>";
+                $consignes .= " fin de la consigne : ";
+                if ( $data['fin'][0]== '1'){
+                    $consignes .= "LUNDI ";    
                     }
-                        elseif ( $data['jour_semaine_fin']== '3'){
-                            $consignes .= "MERCREDI" . "<br>";    
+                    elseif ( $data['fin'][0]== '2'){
+                        $consignes .= "MARDI ";    
                         }
-                            elseif ( $data['jour_semaine_fin']== '4'){
-                                $consignes .= "JEUDI" . "<br>";    
+                        elseif ( $data['fin'][0]== '3'){
+                            $consignes .= "MERCREDI ";    
                             }
-                                elseif ( $data['jour_semaine_fin']== '5'){
-                                    $consignes .= "VENDREDI" . "<br>";    
+                            elseif ( $data['fin'][0]== '4'){
+                                $consignes .= "JEUDI ";    
                                 }
-                                    elseif ( $data['jour_semaine_fin']== '6'){
-                                        $consignes .= "SAMEDI" . "<br>";    
+                                elseif ( $data['fin'][0]== '5'){
+                                    $consignes .= "VENDREDI ";    
                                     }
-                                            elseif ( $data['jour_semaine_fin']== '7'){
-                                                $consignes .= "DIMANCHE" . "<br>";    
+                                    elseif ( $data['fin'][0]== '6'){
+                                        $consignes .= "SAMEDI ";    
+                                        }
+                                        elseif ( $data['fin'][0]== '7'){
+                                            $consignes .= "DIMANCHE ";    
                                             }
-                $consignes .= "Heure de fin de la consigne : ";
-                $consignes .= ($data['heure_fin']) . "<br>";
+                                            $consignes .= $data['fin'][1] . $data['fin'][2]. " h ";
+                                            $consignes .= $data['fin'][3] . $data['fin'][4]. " min ". "<br>";
                 $consignes .= "Température voulu en °C : ";
                 $consignes .= ($data['température']) . "<br>";
                 } ?>
@@ -133,6 +139,17 @@ $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_S
                 }
                 ?>
                 </select>
+                <label>Minute de début.</label>
+                <select name="minute_debut">
+                <?php
+                for ($i = 0; $i < 60; $i++) {
+                    if ($i < 10) {
+                        $i = "0" . $i;
+                    }
+                    echo "<option value='$i'> $i M</option>";
+                }
+                ?>
+            </select>
                 <br>
                 <label>Jour de la semaine de fin.</label>
                 <select name="jour_semaine_fin">
@@ -155,6 +172,18 @@ $reponse = $bdd->query('SELECT * FROM consigne_prog where ID_chauffages =' . $_S
                     echo "<option value='$i'> $i H</option>";
                 }
                 ?>
+                </select>
+                <label>Minute de fin.</label>
+                <select name="minute_fin">
+                <?php
+                for ($i = 0; $i < 60; $i++) {
+                    if ($i < 10) {
+                        $i = "0" . $i;
+                    }
+                    echo "<option value='$i'> $i M</option>";
+                }
+                ?>
+            
             </select>
             <br>
                 <input type="text" name="température" placeholder="température">

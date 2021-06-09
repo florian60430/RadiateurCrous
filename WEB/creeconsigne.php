@@ -39,6 +39,17 @@ include "config.php";
             }
             ?>
         </select>
+        <label>Minute de début.</label>
+            <select name="minute_debut">
+                <?php
+                for ($i = 0; $i < 60; $i++) {
+                    if ($i < 10) {
+                        $i = "0" . $i;
+                    }
+                    echo "<option value='$i'> $i M</option>";
+                }
+                ?>
+            </select>
         <div>
             <label>Jour de la semaine de fin.</label>
             <select name="jour_semaine_fin">
@@ -62,6 +73,17 @@ include "config.php";
                 }
                 ?>
             </select>
+            <label>Minute de fin.</label>
+            <select name="minute_fin">
+                <?php
+                for ($i = 0; $i < 60; $i++) {
+                    if ($i < 10) {
+                        $i = "0" . $i;
+                    }
+                    echo "<option value='$i'> $i M</option>";
+                }
+                ?>
+            </select>
             <div>
                 <input type="text" name="température" placeholder="température">
                 <input type="submit" name="droitForm" value="valider"><!-- bouton pour appeler la fonction droitForm-->   
@@ -70,12 +92,12 @@ include "config.php";
     </form>
     </div>
     <?php
-    if (['jour_semaine_fin'] >= ['jour_semaine_debut']){
+   
         
-        if (isset($_POST['droitForm'])) {/*fonction MYSQL pour rentre une nouvelle consigne*/ 
-            $result =  $bdd->query("INSERT INTO `consigne_prog` (`ID`,`ID_chauffages`, `jour_semaine_debut`, `jour_semaine_fin`, `heure_debut`, `heure_fin`, `température`) 
-            VALUES (NULL,'" . $_SESSION['idChauffage'] . "','" . $_POST['jour_semaine_debut'] . "','" . $_POST['jour_semaine_fin'] . "',
-            '" . $_POST['heure_debut'] . "','" . $_POST['heure_fin'] . "','" . $_POST['température'] . "')");
+        
+            if (isset($_POST['droitForm'])) {/*fonction MYSQL pour rentre une nouvelle consigne*/ 
+                if ($_POST['jour_semaine_fin'] >= $_POST['jour_semaine_debut']){
+            $result =  $bdd->query("INSERT INTO `consigne_prog` (`ID`,`ID_chauffages`, `debut`, `fin`, `température`) VALUES (NULL,'" . $_SESSION['idChauffage'] . "','" . $_POST['jour_semaine_debut'] . $_POST['heure_debut']. $_POST['minute_debut']. "','" . $_POST['jour_semaine_fin'] . $_POST['heure_fin'] . $_POST['minute_fin']. "','" . $_POST['température'] . "')");
 
             /* $mqtt = new bluerhinos\phpMQTT($host, $port, "ClientID" . rand());
             if ($mqtt->connect(true, NULL)) {
@@ -89,10 +111,12 @@ include "config.php";
             } else {
                 echo "Fail or time out";
             }*/
-        } 
-    }else {
+         }
+         else {
             echo "Le jour de fin de consigne ne peut étre avant le jour de début de consigne !";
             }
-    ?>
+        }
+            ?>
+    
 </body>
 </html>
