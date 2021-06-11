@@ -39,8 +39,6 @@ int mqtt::souscrire(int *mid, int qos, char *topic)
 //Callback connexion
 void mqtt::on_connect(struct mosquitto *mosq, void *obj, int rc)
 {
-
-    cout << "je suis connecté" << endl;
     if (rc)
     {
         printf("Error with result code: %d\n", rc);
@@ -72,6 +70,7 @@ void mqtt::on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_
 // Permet de découper l'id, la température et le hors gel de la tram reçu
 void mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel)
 {
+
     char buffer[50];
     int i = 0, j = 0;
 
@@ -79,13 +78,14 @@ void mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel
 
     while (buffer[i] != '+')
     {
-        /* id du raditauer */
+        /* id du radiateur */
         idRad[i] = buffer[i];
         i++;
     }
     i++;
     idRad[i] = '\0';
-   cout << "id du radiateur : " << idRad[0] << endl;
+   cout << "id du radiateur : " << idRad << endl;
+    
     while (buffer[i] != '@')
     {
         /* température du radiateur */
@@ -93,11 +93,12 @@ void mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel
         i++;
         j++;
     }
-    i++;
+    i++; 
     tempRad[j] = '\0';
-    cout << "températuer : " << tempRad << endl;
+    cout << "température : " << tempRad << endl;
 
    horsGel[0] = buffer[i];
+   horsGel[1] = '\0';
    cout << "hors gel : " << horsGel << endl;
 }
 void mqtt::getMessage(const struct mosquitto_message *msg)

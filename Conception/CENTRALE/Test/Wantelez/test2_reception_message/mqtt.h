@@ -1,10 +1,9 @@
-#include <mysql.h>
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
+#include <mosquitto.h>
 
 using namespace std;
 

@@ -1,5 +1,4 @@
 #include "mqtt.h"
-#include "mariadb.h"
 
 //construc
 mqtt::mqtt(const char *id, bool cleanSession, void *userdata)
@@ -40,7 +39,7 @@ int mqtt::souscrire(int *mid, int qos, char *topic)
 void mqtt::on_connect(struct mosquitto *mosq, void *obj, int rc)
 {
 
-    cout << "je suis connecté" << endl;
+    cout << "Une connexion à été détecté " << endl;
     if (rc)
     {
         printf("Error with result code: %d\n", rc);
@@ -53,20 +52,7 @@ void mqtt::on_connect(struct mosquitto *mosq, void *obj, int rc)
 //Callback message
 void mqtt::on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg)
 {
-    if (strcmp(msg->topic, "consigne") == 0)
-    {
-        cout << (char *)msg->payload << endl;
-    }
-
-    if (strcmp(msg->topic, "temperature") == 0)
-    {
-        char idRad[50], tempRad[50], horsGel[50];
-
-        printf("Nouveau message sur le topic \"%s\" : %s\n", msg->topic, (char *)msg->payload);
-        mqtt::parseMessage((char *)msg->payload, idRad, tempRad, horsGel);
-        mariadb::get()->updateEtat(idRad, horsGel);
-        mariadb::get()->updateTemperature(idRad, tempRad);
-    }
+    printf("Nouveau message sur le topic \"%s\" : %s\n", msg->topic, (char *)msg->payload);
 }
 
 // Permet de découper l'id, la température et le hors gel de la tram reçu
@@ -93,7 +79,7 @@ void mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel
         i++;
         j++;
     }
-    i++;
+    i++; j++;
     tempRad[j] = '\0';
     cout << "températuer : " << tempRad << endl;
 

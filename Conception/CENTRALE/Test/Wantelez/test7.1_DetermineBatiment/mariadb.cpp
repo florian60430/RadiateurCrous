@@ -165,24 +165,48 @@ void mariadb::determinePeriode(struct mosquitto *mosq)
 
    char buffer[256], request[500], topic[500];
 
-   while (1)
+   /* mise a jour de l'heure */
+   updateHeure();
+
+   /* selection des id des radiateur */
+   resIdRadiateur = selectIdChauffage(resIdRadiateur);
+
+   while (rowIdRadiateur = mysql_fetch_row(resIdRadiateur))
    {
-      /* mise a jour de l'heure */
-      updateHeure();
+      idRad = atoi(rowIdRadiateur[0]);
 
-      /* selection des id des radiateur */
-      resIdRadiateur = selectIdChauffage(resIdRadiateur);
-
-      while (rowIdRadiateur = mysql_fetch_row(resIdRadiateur))
+      rowNbConsigne = compteNbConsigne();
+      rowBatiment = selectIdBat();
+      /* Si le radiateur n'a aucune consigne */
+      if (atoi(rowNbConsigne[0]) == 0)
       {
-         idRad = atoi(rowIdRadiateur[0]);
-
-         rowNbConsigne = compteNbConsigne();
-         rowBatiment = selectIdBat();
-         /* Si le radiateur n'a aucune consigne */
-         if (atoi(rowNbConsigne[0]) == 0)
+         /* Si on est la nuit */
+         if (heureActuel <= 6 || heureActuel >= 22)
          {
-            /* Si on est la nuit */
+            rowConsigneBase = selectDegreConsigneNuit();
+         }
+         else
+         {
+            rowConsigneBase = selectDegreConsigneJour();
+         }
+
+         //  cout << "le radiateur n° " << rowIdRadiateur[0] << " doit chauffer à " << rowConsigneBase[0] << "°C batiment " << rowBatiment[0] << endl;
+
+         mariadb::constructBufferTemp(buffer, atof(rowConsigneBase[0]));
+
+         snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
+         mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
+      }
+
+      else
+      {
+         /* on détermine si une de ses consigne peut être actif maintenant */
+         rowVerifConsigne = compteNbConsigneProg();
+
+         /* si le radiateur n'a aucune consigne qui doit être actif maintenant */
+         if (atoi(rowVerifConsigne[0]) == 0)
+         {
+            /* Si on est la nuit*/
             if (heureActuel <= 6 || heureActuel >= 22)
             {
                rowConsigneBase = selectDegreConsigneNuit();
@@ -192,59 +216,28 @@ void mariadb::determinePeriode(struct mosquitto *mosq)
                rowConsigneBase = selectDegreConsigneJour();
             }
 
-            cout << "le radiateur n° " << rowIdRadiateur[0] << " doit chauffer à " << rowConsigneBase[0] << "°C batiment " << rowBatiment[0] << endl;
+            rowBatiment = selectIdBat();
 
+            // cout << "le radiateur n° " << rowIdRadiateur[0] << " doit chauffer à " << rowConsigneBase[0] << "°C batiment " << rowBatiment[0] << endl;
             mariadb::constructBufferTemp(buffer, atof(rowConsigneBase[0]));
-
             snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
-            cout << topic << endl;
             mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
          }
 
          else
          {
-            /* on détermine si une de ses consigne peut être actif maintenant */
-            rowVerifConsigne = compteNbConsigneProg();
+            /* Si le radiateur à une consigne qui doit être actif maintenant */
+            rowConsigne = selectConsigne();
 
-            /* si le radiateur n'a aucune consigne qui doit être actif maintenant */
-            if (atoi(rowVerifConsigne[0]) == 0)
-            {
-               /* Si on est la nuit*/
-               if (heureActuel <= 6 || heureActuel >= 22)
-               {
-                  rowConsigneBase = selectDegreConsigneNuit();
-               }
-               else
-               {
-                  rowConsigneBase = selectDegreConsigneJour();
-               }
+            // cout << "le radiateur n° " << rowIdRadiateur[0] << " doit chauffer à " << rowConsigne[4] << "°C batiment " << rowBatiment[0] << endl;
 
-               rowBatiment = selectIdBat();
+            mariadb::constructBufferTemp(buffer, atof(rowConsigne[4]));
+            rowConsigne = selectIdBat();
 
-               cout << "le radiateur n° " << rowIdRadiateur[0] << " doit chauffer à " << rowConsigneBase[0] << "°C batiment " << rowBatiment[0] << endl;
-               mariadb::constructBufferTemp(buffer, atof(rowConsigneBase[0]));
-               snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
-               cout << topic << endl;
-               mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
-            }
-
-            else
-            {
-               /* Si le radiateur à une consigne qui doit être actif maintenant */
-               rowConsigne = selectConsigne();
-
-               cout << "le radiateur n° " << rowIdRadiateur[0] << " doit chauffer à " << rowConsigne[4] << "°C batiment " << rowBatiment[0] << endl;
-
-               mariadb::constructBufferTemp(buffer, atof(rowConsigne[4]));
-               rowConsigne = selectIdBat();
-
-               snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
-               cout << topic << endl;
-               mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
-            }
+            snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
+            mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
          }
       }
-      sleep(15);
    }
 }
 
@@ -253,24 +246,9 @@ void mariadb::constructBufferTemp(char *buffer, float consigne)
 
    char tabConsigne[50];
 
-   if (idRad < 100 && idRad > 9)
-   {
-      snprintf(buffer, 50, "z0%d+", idRad);
-   }
-   else if (idRad < 10)
-   {
-      snprintf(buffer, 50, "z00%d+", idRad);
-   }
-   else
-   {
-      snprintf(buffer, 50, "z%d+", idRad);
-   }
+      snprintf(buffer, 50, "le radiateur N° %d est dans ce batiment", idRad);
 
-   snprintf(tabConsigne, 50, "%.2f", consigne);
-   strcat(buffer, tabConsigne);
-   strcat(buffer, "!");
 }
-
 
 int mariadb::calculJourNuit()
 {
@@ -310,6 +288,6 @@ void mariadb::updateHeure()
 
    snprintf(tempActuel, 50, "%s%s%s", cjourActuel, cheureActuel, cminuteActuel);
 
-  // printf("l'heure actuel est : %s\n", tempActuel);
+   // printf("l'heure actuel est : %s\n", tempActuel);
    cout << tempActuel << endl;
 }

@@ -93,7 +93,7 @@ void mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel
         i++;
         j++;
     }
-    i++;
+    i++; j++;
     tempRad[j] = '\0';
     cout << "températuer : " << tempRad << endl;
 

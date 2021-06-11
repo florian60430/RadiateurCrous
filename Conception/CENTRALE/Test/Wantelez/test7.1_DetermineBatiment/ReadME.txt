@@ -1,0 +1,1 @@
+lancer l'application sur les 2 passerelle : passerelle et passerelle2 puis lancer le test

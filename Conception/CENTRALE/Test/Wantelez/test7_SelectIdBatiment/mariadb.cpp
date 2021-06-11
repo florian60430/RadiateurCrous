@@ -197,7 +197,6 @@ void mariadb::determinePeriode(struct mosquitto *mosq)
             mariadb::constructBufferTemp(buffer, atof(rowConsigneBase[0]));
 
             snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
-            cout << topic << endl;
             mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
          }
 
@@ -224,7 +223,6 @@ void mariadb::determinePeriode(struct mosquitto *mosq)
                cout << "le radiateur n° " << rowIdRadiateur[0] << " doit chauffer à " << rowConsigneBase[0] << "°C batiment " << rowBatiment[0] << endl;
                mariadb::constructBufferTemp(buffer, atof(rowConsigneBase[0]));
                snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
-               cout << topic << endl;
                mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
             }
 
@@ -239,7 +237,6 @@ void mariadb::determinePeriode(struct mosquitto *mosq)
                rowConsigne = selectIdBat();
 
                snprintf(topic, 300, "batiment%d/consigne/radiateur", atoi(rowBatiment[0]));
-               cout << topic << endl;
                mosquitto_publish(mosq, NULL, topic, strlen(buffer), buffer, 0, false);
             }
          }

@@ -22,7 +22,8 @@ int main()
 	}
 
 	mosquitto.loopStart();
-	mariadb::get()->determinePeriode(mosquitto.getMosq());
+	cout << "en attente de message ... " << endl;
+	getchar();
 	mosquitto.loopStop(true);
 
 	mosquitto.deconnexion();

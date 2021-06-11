@@ -61,11 +61,6 @@ void mqtt::on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_
     if (strcmp(msg->topic, "temperature") == 0)
     {
         char idRad[50], tempRad[50], horsGel[50];
-
-        printf("Nouveau message sur le topic \"%s\" : %s\n", msg->topic, (char *)msg->payload);
-        mqtt::parseMessage((char *)msg->payload, idRad, tempRad, horsGel);
-        mariadb::get()->updateEtat(idRad, horsGel);
-        mariadb::get()->updateTemperature(idRad, tempRad);
     }
 }
 
@@ -93,7 +88,7 @@ void mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel
         i++;
         j++;
     }
-    i++;
+    i++; j++;
     tempRad[j] = '\0';
     cout << "températuer : " << tempRad << endl;
 

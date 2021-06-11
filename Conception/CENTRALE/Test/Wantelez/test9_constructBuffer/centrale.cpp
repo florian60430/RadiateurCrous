@@ -20,7 +20,7 @@ int main()
 		printf("Impossible de se connecter au broker %d\n", rc);
 		return -1;
 	}
-
+	
 	mosquitto.loopStart();
 	mariadb::get()->determinePeriode(mosquitto.getMosq());
 	mosquitto.loopStop(true);
