@@ -1,0 +1,1 @@
+g++ -o centrale $(mysql_config --cflags) centrale.cpp mqtt.cpp mariadb.cpp $(mysql_config --libs) -lmosquitto
