@@ -10,11 +10,12 @@ $reponse= $bdd->query('SELECT * FROM config'); /*requet MYSQL qui va séléction
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap.min.css" /> <!-- Appel CSS boostrap-->
         <link rel="stylesheet" href="style.css" /> <!-- Appel le style.CSS -->
-        <title>Document</title>
+        <title>Consigne jour et nuit</title>
     </head>
     <body>
         <form action="" method="post">
-        <label><b>Attention si vous ne voulez pas changer la température il faut quand même entré la température avec la même valeur affficher et la température et en °C.</b></label><br>
+        <label><b>Attention si vous ne voulez pas modifier une température il faut quand même entrer des données donc réécrive la température que vous voulez garder.</b></label><br>
+        <label>Le jour va de 06H00 à 22H00 et la nuit de 22H00 à 06H00.</label><br>
                 <input type="text" name="degres_jour" placeholder="Température la journeé"><!-- champ rentre la température de la journeé -->
                 <input type="text" name="degres_nuit" placeholder="Température la nuit"><!-- champ rentre la température de la nuit -->
                 <input type="submit" name="droitForm" value="valider"><!-- bouton valide les entrés -->

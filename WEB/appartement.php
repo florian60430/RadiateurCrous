@@ -28,7 +28,7 @@ $reponse=$bdd->query("SELECT * FROM appartement where ID_Batiment =".$_SESSION['
                 ?></p><?php  
                 ?><form action="chauffage.php" method="post"><!-- bouton qui envoi a la page des chauffage et qui envoi a cette page l'ID de l'appartement séléctionner-->
                 <input type="hidden" name="idAppartement" value="<?php echo $donnees1['ID'];?>"> 
-                <input type="submit" value="selectioner" name="appartement"><br> </form> <?php  
+                <input type="submit" value="sélectionner" name="appartement"><br> </form> <?php  
             }   
         ?>
     </body>

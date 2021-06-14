@@ -16,7 +16,7 @@ if ($_SESSION['connect'] == 2) /* condition pour vérifier que vous été bien u
 {?>
         <form action="param.php" method="post"> <!-- bouton de la page paramétre qui renvoi sur la page des paramétre-->
             <input type="hidden" name="fg"> 
-            <input type="submit" value="Parametre"><br> 
+            <input type="submit" value="Paramètre"><br> 
         </form> 
 <?php } ?>
 

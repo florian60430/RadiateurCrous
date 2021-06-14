@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap.min.css" /> <!-- Appel CSS boostrap-->
         <link rel="stylesheet" href="style.css" /><!-- Appel le style.CSS -->
-        <title>Document</title>
+        <title>Supprimer une consigne</title>
     </head>
     <body>
     <a href="consigne.php">retour</a><br><!-- bouton de retour aux consigne -->

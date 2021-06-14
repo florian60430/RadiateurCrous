@@ -23,12 +23,12 @@ $reponse=$bdd->query("SELECT * FROM chauffage where ID_appartement=".$_SESSION['
             while ($donnees2 = $reponse->fetch())/* boucle pour afficher les information de la requet MYSQL*/
             {   
                 ?><p><?php    
-                echo "température du chauffage N°".$donnees2['ID']." : ".$donnees2['temperature']." °C"; 
-                echo "état du chauffage : ".$donnees2['etat'];  
+                echo "Température du chauffage N°".$donnees2['ID']." : ".$donnees2['temperature']." °C"."<br>"; 
+                echo "Etat du chauffage : ".$donnees2['etat']."<br>";  
                 ?> </p> 
                 <form action="consigne.php" method="post"><!-- bouton qui envoi a la page des consigne et qui envoi a cette page l'ID du chauffage séléctionner-->
                 <input type="hidden" name="ID" value="<?php echo $donnees2['ID'];?>"> 
-                <input type="submit" value="selectioner"><br> </form> <?php   
+                <input type="submit" value="sélectionner"><br> </form> <?php   
             } 
           
         ?>
