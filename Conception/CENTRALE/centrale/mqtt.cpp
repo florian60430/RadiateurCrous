@@ -61,44 +61,63 @@ void mqtt::on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_
     if (strcmp(msg->topic, "temperature") == 0)
     {
         char idRad[50], tempRad[50], horsGel[50];
+        int verif;
 
         printf("Nouveau message sur le topic \"%s\" : %s\n", msg->topic, (char *)msg->payload);
-        mqtt::parseMessage((char *)msg->payload, idRad, tempRad, horsGel);
+        verif = mqtt::parseMessage((char *)msg->payload, idRad, tempRad, horsGel);
+        if (verif == 1)
+        {
         mariadb::get()->updateEtat(idRad, horsGel);
         mariadb::get()->updateTemperature(idRad, tempRad);
+        }
+        else
+        {
+            cout << "la tram reçu ne semble pas complète" << endl;
+        }
     }
 }
 
 // Permet de découper l'id, la température et le hors gel de la tram reçu
-void mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel)
+int mqtt::parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel)
 {
+
     char buffer[50];
     int i = 0, j = 0;
 
     strcpy(buffer, payload);
 
-    while (buffer[i] != '+')
+    int index = strlen(buffer);
+    if (buffer[index - 3] == '#' && buffer[index - 5] == '@' && buffer[index - 11])
     {
-        /* id du raditauer */
-        idRad[i] = buffer[i];
+        while (buffer[i] != '+')
+        {
+            /* id du raditauer */
+            idRad[i] = buffer[i];
+            i++;
+        }
         i++;
-    }
-    i++;
-    idRad[i] = '\0';
-   cout << "id du radiateur : " << idRad[0] << endl;
-    while (buffer[i] != '@')
-    {
-        /* température du radiateur */
-        tempRad[j] = buffer[i];
+        idRad[i] = '\0';
+        cout << "id du radiateur : " << idRad[0] << endl;
+        while (buffer[i] != '@')
+        {
+            /* température du radiateur */
+            tempRad[j] = buffer[i];
+            i++;
+            j++;
+        }
         i++;
-        j++;
-    }
-    i++;
-    tempRad[j] = '\0';
-    cout << "températuer : " << tempRad << endl;
+        tempRad[j] = '\0';
+        cout << "températuer : " << tempRad << endl;
 
-   horsGel[0] = buffer[i];
-   cout << "hors gel : " << horsGel << endl;
+        horsGel[0] = buffer[i];
+        cout << "hors gel : " << horsGel << endl;
+
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
 }
 void mqtt::getMessage(const struct mosquitto_message *msg)
 {

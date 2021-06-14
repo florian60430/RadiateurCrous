@@ -10,7 +10,7 @@ class mqtt
 {
     struct mosquitto * mosq;
     char topic[50] = "test";
-    char message[50]="pi2";
+    char message[50];
     
     int id;
     static void on_connect(struct mosquitto * mosq, void *obj, int rc);
@@ -22,7 +22,7 @@ class mqtt
     int setPasswd(const char *username, const char *password);	
     int connexion(const char *host, int port, int keepalive);
     int souscrire(int* mid, int qos);
-    int publier(int *mid, int qos, bool retain);
+    int publier(int *mid, int qos, bool retain, char *topic, const char *message);
     void callbackConnexion();	
     void callbackMessage();
     int loopStart();
@@ -32,4 +32,7 @@ class mqtt
     int getId() { return id; };
     mosquitto * getMosq() { return mosq; };
     void setMessage(char * newMessage);
+    char * getMessage() {
+        return message;
+    }
 };

@@ -84,24 +84,23 @@ void loop()
 
   donnee->capteur::set_timer(80);
   
-  int tempActuel = donnee->Convert_temperature(analogRead(0));
-
   int hors_gel = donnee->capteur::detecte_presence();
 
 
 char tmp[50];
 dtostrf(temp, 4, 2, tmp);
 snprintf(tram, 50, "%d+%s@%d#\0", id, tmp, hors_gel);
+  
+  chauffe->consigne::put_hors_gel(hors_gel);
+
+  power = chauffe->consigne::consigne_de_chauffe(hors_gel, temp, consigne, heure, power);
+
+  compteur ++;
 
 result = compteur % 10;
 if (result == 0)
 {
   Serial.println(tram);
-}  
-  chauffe->consigne::put_hors_gel(hors_gel);
-
-  power = chauffe->consigne::consigne_de_chauffe(hors_gel, tempActuel, consigne, heure, power);
-
-  compteur ++;
+}
   delay(500); 
 } 

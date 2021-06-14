@@ -21,7 +21,7 @@ int consigne::put_hors_gel(bool hors_gel){
 }
 
 // controle le marche / arret du radiateur
-int consigne::consigne_de_chauffe(bool hors_gel, int tempActuel, float consigneRad, int heure, int power){
+int consigne::consigne_de_chauffe(bool hors_gel, float tempActuel, float consigneRad, int heure, int power){
   
   /*if(heure < 6 || heure > 22){
     consigneRad = 16;

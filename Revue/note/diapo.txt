@@ -1,6 +1,2 @@
-faire une diapo sur les 2 protocole de construction de chaine,
-rajouter 2 séquence avec 2 modules de test
-ajouter le use case perso
+﻿rajouter 2 séquence avec 2 modules de test
 numéroter les diapo
-mettre à jour les gantts
-mettre une diapo sur la répartition du travail

@@ -19,7 +19,7 @@ class mqtt
 
 
     public:
-    static void parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel);
+    static int parseMessage(char *payload, char *idRad, char *tempRad, char *horsGel);
     mqtt(const char *id, bool cleanSession, void *userdata);
     void detruire();
     int setPasswd(const char *username, const char *password);	
